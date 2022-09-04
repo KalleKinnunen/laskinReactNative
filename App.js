@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 
 
 
@@ -8,7 +8,20 @@ export default function App() {
   const [result, setResult] = React.useState('')
   const [firstNumber, setFirstNumber] = React.useState('')
   const [secondNumber, setSecondNumber] = React.useState('')
-  
+  const [history, setHistory] = ([])
+
+  const handleAdd = () => {
+    setResult(parseInt(firstNumber) + parseInt(secondNumber))
+    setHistory([{ key: `${firstNumber} + ${secondNumber} = ${parseInt(firstNumber) + parseInt(secondNumber)}` }, ...history])
+  }
+
+
+  const handleSubtract = () => {
+    setResult(parseInt(firstNumber) - parseInt(secondNumber))
+    setHistory([{ key: `${firstNumber} - ${secondNumber} = ${parseInt(firstNumber) - parseInt(secondNumber)}` }, ...history])
+  }
+
+
   return (
    
     <View style={styles.container}>
@@ -28,18 +41,30 @@ export default function App() {
       <View style={{ flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setResult(parseInt(firstNumber) + parseInt(secondNumber))}>
+          onPress={() => handleAdd()}>
           <Text style={styles.buttontext}>+</Text>
         </TouchableOpacity>
 
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setResult((firstNumber - secondNumber))}>
+          onPress={() => handleSubtract()}>
           <Text style={styles.buttontext}>-</Text>
         </TouchableOpacity>
 
       </View>
+
+      <Text style={{ marginTop: 20 }}>History:</Text>
+      <FlatList 
+        heading="History"
+        style={{ flex: 1 }}
+        data={history}
+        renderItem={({ item }) => {
+          return (
+            <Text>{item.key}</Text>
+          )
+        }}
+        ></FlatList>
 
  <StatusBar style="auto" />
     </View>
