@@ -8,7 +8,7 @@ export default function App() {
   const [result, setResult] = React.useState('')
   const [firstNumber, setFirstNumber] = React.useState('')
   const [secondNumber, setSecondNumber] = React.useState('')
-  const [history, setHistory] = ([])
+  const [history, setHistory] = useState([])
 
   const handleAdd = () => {
     setResult(parseInt(firstNumber) + parseInt(secondNumber))
@@ -54,7 +54,7 @@ export default function App() {
 
       </View>
 
-      <Text style={{ marginTop: 20 }}>History:</Text>
+      <Text>History:</Text>
       <FlatList 
         heading="History"
         style={{ flex: 1 }}
